@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.4/nv.d3.min.css" />
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.min.css">
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.5/nv.d3.min.js"></script>
+    <script src="js/d3tip.js"></script>
+    <script src="js/main.js"></script>
+
+    <title>Parallel Devs</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Parallel Devs</a>
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Author: Gabriel Solano V.</a>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#data-table">
+                                <span data-feather="grid"></span>
+                                Chicago statistics
+                                <span class="sr-only"></span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#grafica-1">
+                                <span data-feather="bar-chart"></span>
+                                Bar chart
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#grafica-2">
+                                <span data-feather="circle"></span>
+                                Bubble chart
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                <h2>Chicago Statistics</h2>
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <div class="container">
+                        <div class="table-responsive">
+                            <table id="data-table" class="table table-striped table-sm">
+                                <thead>
+                                    <tr>
+                                        <!--Se colocan los títulos de cada columna -->
+                                        <th scope="col">Community area name</th>
+                                        <th scope="col">Bellow Powerty Level</th>
+                                        <th scope="col">Birth rate</th>
+                                        <th scope="col">Breast cancer in females</th>
+                                        <th scope="col">Cancer all sites</th>
+                                        <th scope="col">Childhood blood lead level screening</th>
+                                        <th scope="col">Childhood lead poisoning</th>
+                                        <th scope="col">Colorectal cancer</th>
+                                        <th scope="col">Community area</th>
+                                        <th scope="col">Assault Homicide</th>
+                                        <th scope="col">Crowded housing</th>
+                                        <th scope="col">Dependency</th>
+                                        <th scope="col">Diabetes related</th>
+                                        <th scope="col">Firearm related</th>
+                                        <th scope="col">General Fertility rate</th>
+                                        <th scope="col">Gonorrhea in females</th>
+                                        <th scope="col">Gonorrhea in males</th>
+                                        <th scope="col">Infant mortality rate</th>
+                                        <th scope="col">Low birth weight</th>
+                                        <th scope="col">Lung cancer</th>
+                                        <th scope="col">No high school diploma</th>
+                                        <th scope="col">Per capita income</th>
+                                        <th scope="col">Prenatal care beginning in first trimester</th>
+                                        <th scope="col">Preterm births</th>
+                                        <th scope="col">Prostate Cancer in males</th>
+                                        <th scope="col">Stroke cerebrovascular disease</th>
+                                        <th scope="col">Teen birth rate</th>
+                                        <th scope="col">Tuberculosis</th>
+                                        <th scope="col">Unemployment</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div id="grafica-1">
+                    <h2>Bar Chart</h2>
+                </div>
+                <script>
+                    //CREACIÓN DEL GRÁFICO DEL BARRAS
+                    // Se establece el tamaño del Gráfico
+                    var margin = {
+                            top: 40,
+                            right: 40,
+                            bottom: 40,
+                            left: 60
+                        },
+                        width = 960 - margin.left - margin.right,
+                        height = 500 - margin.top - margin.bottom;
+
+                    var x = d3.scale.ordinal().rangeRoundBands([0, width], .1);
+
+                    var y = d3.scale.linear().range([height, 0]);
+
+                    // Se crean el eje 'x' y 'y'
+                    var xAxis = d3.svg.axis()
+                        .scale(x)
+                        .orient("bottom")
+
+
+                    var yAxis = d3.svg.axis()
+                        .scale(y)
+                        .orient("left")
+                        .ticks(10);
+
+                    // se crea el tip que aparece cuando se está en una barra
+                    var tip = d3.tip()
+                        .attr('class', 'd3-tip')
+                        .offset([-10, 0])
+                        .html(function (d) {
+                            return "<strong>No Diploma HS: </strong><span style='color:white'>" + d.no_high_school_diploma +
+                                "</span>";
+                        })
+
+                    // Se agrega el elemento svg en el div con el id: #grafica-1
+                    var svg = d3.select("#grafica-1").append("svg")
+                        .attr("id", "svg-1")
+                        .attr("preserveAspectRatio", "xMinYMin meet") // se utiliza para la responsividad del gráfico
+                        .attr("viewBox", "0 0 950 500") // se utiliza para la responsividad del gráfico
+                        .append("g")
+                        .attr("transform",
+                            "translate(" + margin.left + "," + margin.top + ")");
+
+                    svg.call(tip); //llamado del elemento tip
+
+                    // se traen los datos del API
+                    d3.json("https://data.cityofchicago.org/resource/gtem-tu7s.json", function (error, data) {
+
+                        data.forEach(function (d) {
+                            d.community_area = d.community_area;
+                            d.no_high_school_diploma = +d.no_high_school_diploma; //Se pasa cada elemento a número
+                        });
+
+                        // función utilizada para el orden de las barras
+                        data.sort(function (a, b) {
+                            return d3.descending(a.no_high_school_diploma, b.no_high_school_diploma)
+                        })
+
+                        // Números del eje X
+                        x.domain(data.map(function (d) {
+                            return d.community_area;
+                        }));
+
+                        // Números del eje Y
+                        y.domain([0, d3.max(data, function (d) {
+                            return d.no_high_school_diploma;
+                        })]);
+
+                        //Se le da estilo al eje X
+                        svg.append("g")
+                            .attr("class", "x axis")
+                            .attr("transform", "translate(0," + height + ")")
+                            .call(xAxis) //llamada de la instancia creada anteriormente con la orientación del eje
+                            .selectAll("text")
+                            .style("text-anchor", "end")
+                            .attr("dx", "-.8em")
+                            .attr("dy", "-.55em")
+                            .attr("transform", "rotate(-90)");
+
+                        //Se le da estilo al eje Y
+                        svg.append("g")
+                            .attr("class", "y axis")
+                            .call(yAxis) //llamada de la instancia creada anteriormente con la orientación del eje
+                            .append("text")
+                            .attr("y", -22)
+                            .attr("x", -60)
+                            .attr("dy", ".71em")
+                            .text("No Diploma High School")
+                            .style({
+                                "font-weight": "bold"
+                            });
+
+                        svg.append("text")
+                            .attr("text-anchor", "end")
+                            .attr("x", width + 20)
+                            .attr("y", height + 35)
+                            .text("Area")
+                            .style({
+                                "font-weight": "bold"
+                            });
+
+                        //Se crean las barras 
+                        svg.selectAll("bar")
+                            .data(data) //adjunto datos
+                            .enter().append("rect") //creación del elemento RECT
+                            .attr("class", "bar")
+                            .attr("x", function (d) {
+                                return x(d.community_area);
+                            })
+                            .attr("width", x.rangeBand())
+                            .attr("y", function (d) {
+                                return y(d.no_high_school_diploma);
+                            })
+                            .attr("height", function (d) {
+                                return height - y(d.no_high_school_diploma);
+                            })
+                            .on('mouseover', tip.show) //se muestra el tip
+                            .on('mouseout', tip.hide)
+                    });
+
+                </script>
+
+                <div id="grafica-2">
+                    <h2>Bubble Chart</h2>
+                </div>
+
+                <script>
+                    //CREACIÓN DEL GRÁFICO BURBUJA
+                    var diameter = 1000, //máximo diametro que puede tener una burbuja
+                        color = d3.scale.category10(); //paleta de colores utilizada
+
+                    //creación de las burubujas
+                    var bubble = d3.layout.pack()
+                        .sort(null)
+                        .size([diameter, diameter])
+                        .padding(1.5);
+
+                    var svg2 = d3.select("#grafica-2")
+                        .append("svg")
+                        .attr("id", "svg-2")
+                        .attr("preserveAspectRatio", "xMinYMin meet") //utilizado para la responsividad del gráfico
+                        .attr("viewBox", "0 0 980 990") //utilizado para la responsividad del gráfico
+                        .attr("class", "bubble");
+
+                    var tip2 = d3.select("body")
+                        .append("div")
+                        .style("position", "absolute")
+                        .style("z-index", "10")
+                        .style("visibility", "hidden")
+                        .style("color", "white")
+                        .style("padding", "8px")
+                        .style("background-color", "rgba(0, 0, 0, 0.75)")
+                        .style("border-radius", "6px")
+                        .style("font", "12px sans-serif")
+                        .text("tip2");
+
+                    d3.json("https://data.cityofchicago.org/resource/gtem-tu7s.json", function (error, data) {
+                        data.sort(function (a, b) {
+                            return d3.descending(a.birth_rate, b.birth_rate)
+                        })
+                        //Se pasa de string a número
+                        data = data.map(function (d) {
+                            d.value = +d.birth_rate;
+                            return d;
+                        });
+
+                        //Se pasan burbuja a nodos
+                        var nodes = bubble.nodes({
+                            children: data
+                        }).filter(function (d) {
+                            return !d.children;
+                        });
+
+                        var bubbles = svg2.append("g")
+                            .attr("transform", "translate(0,0)")
+                            .selectAll(".bubble")
+                            .data(nodes)
+                            .enter();
+
+                        //creación de las burbujas
+                        bubbles.append("circle")
+                            .attr("r", function (d) {
+                                return d.r;
+                            })
+                            .attr("cx", function (d) {
+                                return d.x;
+                            })
+                            .attr("cy", function (d) {
+                                return d.y;
+                            })
+                            .style("fill", function (d) {
+                                return color(d.value);
+                            }) // Manejo de eventos para la aparición del elemento tip
+                            .on("mouseover", function (d) {
+                                tip2.text("Birth rate: " + d.birth_rate);
+                                tip2.style("visibility", "visible");
+                            })
+                            .on("mousemove", function () {
+                                return tip2.style("top", (d3.event.pageY - 10) + "px").style("left", (d3
+                                    .event.pageX + 10) + "px");
+                            })
+                            .on("mouseout", function () {
+                                return tip2.style("visibility", "hidden");
+                            });
+
+                        //se agrega el texto a la burbuja
+                        bubbles.append("text")
+                            .attr("x", function (d) {
+                                return d.x;
+                            })
+                            .attr("y", function (d) {
+                                return d.y + 5;
+                            })
+                            .attr("text-anchor", "middle")
+                            .text(function (d) {
+                                return d.community_area_name.substring(0, d.r / 4); // se corta de acuerdo a la medida de la burbuja
+                            })
+                            .style({
+                                "fill": "white",
+                                "font-size": "12px"
+                            });
+                    })
+
+                </script>
+            </main>
+        </div>
+    </div>
+
+
+    <!-- Modal del mapa -->
+
+    <div id="mapModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Map</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="map" class="modal-body">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmprM9daEOTyPl-J1FEdGJK5VudcBhG-o" async defer></script>
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+        feather.replace()
+
+    </script>
+</body>
+
+</html>
