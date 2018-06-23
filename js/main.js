@@ -1,3 +1,4 @@
+
 //Smooth scroll. Tomado de: https://www.w3schools.com/jquery/tryit.asp?filename=tryjquery_eff_animate_smoothscroll
 $(document).ready(function () {
     //función creada para todos los anchor

@@ -188,3 +188,20 @@ body {
     height: 100%;
     width: 100%;
 }
+.dataTables_wrapper .dataTables_filter input {
+    width: 130px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-position: 10px 10px; 
+    background-repeat: no-repeat;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+.dataTables_wrapper .dataTables_filter input:focus {
+    width:70%;
+}
+
