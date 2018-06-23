@@ -34,7 +34,7 @@ $(document).ready(function () {
                 "mData": "community_area_name",
                 "render": function (data, type, row, meta) {
                     if (type === 'display') {
-                        data = '<button type="button" class="btn btn-link" onclick="mostrarMapa(this)">' + data + '</button>';
+                        data = '<button type="button" class="btn btn-link" onclick="showMap(this)">' + data + '</button>';
                     } //Creación de button con evento para mostrar mapa
                     return data;
                 }
@@ -130,7 +130,7 @@ $(document).ready(function () {
     });
 });
 
-function mostrarMapa(value) {
+function showMap(value) {
     $('#mapModal').modal({
         backdrop: 'static',
         keyboard: false

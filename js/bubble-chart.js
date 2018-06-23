@@ -8,7 +8,7 @@ var bubble = d3.layout.pack()
     .size([diameter, diameter])
     .padding(1.5);
 
-var svg2 = d3.select("#grafica-burbujas")
+var svg2 = d3.select("#bubble-chart")
     .append("svg")
     .attr("id", "svg-2")
     .attr("preserveAspectRatio", "xMinYMin meet") //utilizado para la responsividad del gráfico

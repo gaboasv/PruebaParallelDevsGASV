@@ -33,8 +33,8 @@
                  "</span>";
          })
 
-     // Se agrega el elemento svg en el div con el id: #grafica-barras
-     var svg = d3.select("#grafica-barras").append("svg")
+     // Se agrega el elemento svg en el div con el id: #bar-chart
+     var svg = d3.select("#bar-chart").append("svg")
          .attr("id", "svg-1")
          .attr("preserveAspectRatio", "xMinYMin meet") // se utiliza para la responsividad del gráfico
          .attr("viewBox", "0 0 950 500") // se utiliza para la responsividad del gráfico
