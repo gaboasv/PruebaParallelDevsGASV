@@ -5,10 +5,9 @@ $(document).ready(function () {
 
         // Se valida que el Hash no venga vacío
         if (this.hash !== "") {
-            
+
             event.preventDefault();
 
-        
             var hash = this.hash;
 
             // Se utiliza el método animate() de JQuery
