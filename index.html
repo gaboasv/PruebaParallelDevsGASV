@@ -57,6 +57,31 @@
 
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                 <h2>Chicago Statistics</h2>
+
+                <div class="row">
+                    <div class="col">
+                        <h4>First 5 areas in...</h4>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                Choose one
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" onclick="advancedSearch(1)">Teen Birth Rate</a>
+                                <a class="dropdown-item" onclick="advancedSearch(2)">Assault Homicide</a>
+                                <a class="dropdown-item" onclick="advancedSearch(3)">Unemployment</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h4>Basic Search...</h4>
+                        <input type="text" id="search-input" onkeyup="basicSearch()">
+                    </div>
+                    <div class="col">
+                        <h4>Or...</h4>
+                        <button onclick="clearTable()" class="btn btn-primary">Reset search</button>
+                    </div>
+                </div>
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <div class="container">
                         <table id="data-table" class="table table-striped table-sm table-responsive">
@@ -134,6 +159,7 @@
         </div>
     </footer>
 
+    <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 
     <!-- JS para la creación de la gráfica de barras -->

@@ -1,4 +1,3 @@
-
 //Smooth scroll. Tomado de: https://www.w3schools.com/jquery/tryit.asp?filename=tryjquery_eff_animate_smoothscroll
 $(document).ready(function () {
     //función creada para todos los anchor
@@ -22,10 +21,9 @@ $(document).ready(function () {
     });
 });
 
-// DATATABLE JQUERY
-$(document).ready(function () {
-    // Se carga la tabla
+function setDatatable() {
     $('#data-table').DataTable({
+        "lengthChange": false,
         "ajax": {
             "url": 'https://data.cityofchicago.org/resource/gtem-tu7s.json',
             "dataSrc": ''
@@ -128,7 +126,55 @@ $(document).ready(function () {
             },
         ]
     });
+}
+// DATATABLE JQUERY
+$(document).ready(function () {
+    // Se carga la tabla
+    setDatatable();
+
 });
+
+function basicSearch(){
+    var table = $('#data-table').DataTable();
+    table.search( $('#search-input').val()).draw();//metodo para busqueda con input
+}
+function advancedSearch(value) {
+    var selectedValue = value;
+    var table = $('#data-table').DataTable();
+    table.clear();
+    var JSONItems = [];
+    $.getJSON("https://data.cityofchicago.org/resource/gtem-tu7s.json", function (json) {//se obtiene JSON
+        JSONItems = json;
+        if (selectedValue == 1) {
+            JSONItems.sort(function (a, b) { //se ordena array
+                return parseFloat(b.teen_birth_rate) - parseFloat(a.teen_birth_rate);
+            });
+        } else if (selectedValue == 2) {
+            JSONItems.sort(function (a, b) {
+                return parseFloat(b.assault_homicide) - parseFloat(a.assault_homicide);
+            });
+        } else {
+            JSONItems.sort(function (a, b) {
+                return parseFloat(b.unemployment) - parseFloat(a.unemployment);
+            });
+        }
+        jsonFinal = JSONItems.slice(0, 5); //se obtiene los primeros 5
+        table.rows.add(jsonFinal); //se envian los nuevos datos
+        table.draw();//se pinta la tabla
+    })
+}
+
+function clearTable() {
+    
+    var table = $('#data-table').DataTable();
+    table.clear();
+    var JSONItems = [];
+    $.getJSON("https://data.cityofchicago.org/resource/gtem-tu7s.json", function (json) {
+        JSONItems = json;
+        table.rows.add(JSONItems);
+        table.draw();
+    })
+}
 
 function showMap(value) {
     $('#mapModal').modal({
